@@ -24,7 +24,7 @@
 
 const companyInfo = {
   legalNameEn: "RG Consultants (Adv. Rachit Kumar Garg)",
-  legalNameHi: "आर जी कंसल्टेंट्स (अद्व. रचित गर्ग)",
+  legalNameHi: "आरजी कंसल्टेंट्स (अद्व. रचित गर्ग)",
   displayName: "RG Consultants",
   tagline: "Registration and compliance, handled properly.",
   category: "Tax Consultant · Dehradun, Uttarakhand",
