@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — RG Consultants</title>
+<meta name="description" content="Company registration, GST & taxation, accounting, audit, ROC compliance and financial advisory — services offered by RG Consultants, Dehradun.">
+<link rel="canonical" href="https://rgconsultants.in/services.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header" id="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a> / Services</div>
+      <h1>Expertise that keeps your business moving.</h1>
+      <p>Six practice areas, one point of contact — every engagement is assigned a lead consultant.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="service-list reveal" id="allServicesGrid"></div>
+    </div>
+  </section>
+
+  <section class="section-dark" style="text-align:center;">
+    <div class="wrap reveal" style="max-width:600px;">
+      <h2 style="color:var(--on-dark);font-size:clamp(26px,3.6vw,36px);">Not sure which service you need?</h2>
+      <p style="color:var(--on-dark-soft);margin-top:14px;">Tell us what your business is dealing with and we'll point you in the right direction.</p>
+      <div style="margin-top:24px;"><a href="book-consultation.html" class="btn btn-gold">Book a Consultation</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("allServicesGrid").innerHTML = services.map(s => `
+    <a href="service-detail.html?service=${s.slug}" class="service-row">
+      <span class="service-row-num">${s.num}</span>
+      <span class="service-row-title">${s.title}</span>
+      <span class="service-row-desc">${s.short}</span>
+      <span class="service-row-arrow">→</span>
+    </a>
+  `).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — RG Consultants</title>
+<meta name="description" content="Contact RG Consultants, Dehradun — phone, email, office address and enquiry form.">
+<link rel="canonical" href="https://rgconsultants.in/contact.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header" id="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
+      <h1>Let's discuss your requirements.</h1>
+    </div>
+  </section>
+
+  <section style="padding-top:20px;">
+    <div class="wrap" style="display:grid;grid-template-columns:0.95fr 1.05fr;gap:56px;">
+      <div class="reveal">
+        <form id="contactForm" class="panel" action="" method="POST">
+          <div class="row2">
+            <div class="field"><label for="name">Full name</label><input id="name" name="name" type="text" placeholder="Your full name" required><div class="field-error">Please enter your name.</div></div>
+            <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" placeholder="10-digit mobile number" required><div class="field-error">Please enter your phone number.</div></div>
+          </div>
+          <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required><div class="field-error">Please enter a valid email.</div></div>
+          <div class="field">
+            <label for="service">Service needed</label>
+            <select id="service" name="service"></select>
+          </div>
+          <div class="field"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us briefly what you need help with."></textarea></div>
+          <button type="submit" class="btn btn-primary submit-btn">Send Enquiry →</button>
+          <div class="form-note">We usually respond within one business day.</div>
+          <div id="form-status"></div>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <dl class="contact-dl" style="margin-top:16px;">
+          <dt>Registered as</dt>
+          <dd id="ddLegal"></dd>
+          <dt>Office</dt>
+          <dd><a id="ddAddress" href="#" target="_blank" rel="noopener" style="border-bottom:1px solid var(--border);"></a></dd>
+          <dt>Phone</dt>
+          <dd><a id="ddPhone" href="#"></a></dd>
+          <dt>Email</dt>
+          <dd id="ddEmail"></dd>
+          <dt>Hours</dt>
+          <dd>
+            <button type="button" class="hours-toggle" id="hoursToggle" aria-expanded="false">
+              <span id="hoursSummary">Today's hours</span>
+              <span class="toggle-icon" id="hoursIcon">+</span>
+            </button>
+            <div class="hours-panel" id="hoursPanel">
+              <div class="hours-panel-inner">
+                <div class="hours-grid" id="hoursGrid"></div>
+                <span class="hours-note" id="hoursNoteText"></span>
+              </div>
+            </div>
+          </dd>
+        </dl>
+
+        <div class="contact-actions">
+          <a id="callBtn" href="#" class="btn btn-outline">Call Us</a>
+          <a id="whatsappBtn" href="#" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp</a>
+        </div>
+
+        <div class="location-card">
+          <div class="location-card-header">
+            <span class="label">Registered Office</span>
+            <span class="verified">Verified Location</span>
+          </div>
+          <a class="map-link" id="mapLink" href="#" target="_blank" rel="noopener" aria-label="Open RG Consultants location in Google Maps">
+            <iframe class="map-embed" id="mapEmbed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="pointer-events:none;" title="RG Consultants location map"></iframe>
+          </a>
+          <div class="location-card-footer">
+            <span class="addr" id="cardAddr"></span>
+            <a id="directionsLink" href="#" target="_blank" rel="noopener" class="directions-link">Get Directions ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOOGLE REVIEWS -->
+  <section class="reviews-band">
+    <div class="wrap reveal">
+      <div class="reviews-head">
+        <svg class="g-mark" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l6-6C34.5 5.1 29.5 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21 21-9.4 21-21c0-1.4-.1-2.7-.4-3.5z"/>
+          <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l6-6C34.5 5.1 29.5 3 24 3c-7.7 0-14.4 4.4-17.7 10.7z"/>
+          <path fill="#4CAF50" d="M24 45c5.4 0 10.3-1.8 14-5l-6.5-5.5c-2.1 1.4-4.8 2.2-7.5 2.2-5.3 0-9.7-3.3-11.3-8l-6.6 5.1C9.5 40.5 16.2 45 24 45z"/>
+          <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.3 5.5l6.5 5.5C41.9 35.8 45 30.3 45 24c0-1.4-.1-2.7-.4-3.5z"/>
+        </svg>
+        <h3>What clients say on Google</h3>
+      </div>
+      <!--
+        Static reviews — populated from js/data.js (the `reviews` array).
+        Same source as index.html; add reviews there once, both pages update.
+      -->
+      <div class="review-grid" id="reviewGrid"></div>
+      <div class="reviews-footer">
+        <p>Reviews shown here are copied word for word from our Google Business Profile.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.getElementById("ddLegal").innerHTML = `${companyInfo.legalNameEn}<br><span lang="hi" style="display:block;margin-top:2px;">${companyInfo.legalNameHi}</span>`;
+  document.getElementById("ddAddress").textContent = companyInfo.address;
+  document.getElementById("ddAddress").href = companyInfo.mapsUrl;
+  document.getElementById("ddPhone").textContent = companyInfo.phone;
+  document.getElementById("ddPhone").href = companyInfo.phoneHref;
+  document.getElementById("ddEmail").textContent = companyInfo.email;
+  document.getElementById("hoursGrid").innerHTML = buildHoursGridHTML();
+  document.getElementById("hoursNoteText").textContent = companyInfo.hoursNote;
+  initHoursWidget("hoursToggle", "hoursSummary", "hoursIcon");
+
+  document.getElementById("callBtn").href = companyInfo.phoneHref;
+  document.getElementById("whatsappBtn").href = companyInfo.whatsappHref;
+  document.getElementById("mapLink").href = companyInfo.mapsUrl;
+  document.getElementById("mapEmbed").src = companyInfo.mapsEmbedSrc;
+  document.getElementById("cardAddr").textContent = companyInfo.address;
+  document.getElementById("directionsLink").href = companyInfo.mapsUrl;
+  RGData.getReviews().then(list => {
+    const grid = document.getElementById("reviewGrid");
+    if (!list.length) {
+      grid.innerHTML = `<p class="reviews-empty">Reviews will appear here soon.</p>`;
+      return;
+    }
+    grid.innerHTML = list.slice(0, 6).map(r => `
+      <div class="review-card">
+        ${r.rating ? `<div class="review-stars" aria-label="${r.rating} out of 5 stars">${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</div>` : ""}
+        <p class="review-text">${r.text}</p>
+        <div class="review-attribution">
+          <span class="review-name">${r.name}</span>
+          <span class="review-date">${r.date || ""}</span>
+        </div>
+      </div>
+    `).join("");
+  });
+
+  document.getElementById("service").innerHTML = services.map(s => `<option>${s.title}</option>`).join("") + `<option>Something else</option>`;
+  const preselect = qs("service");
+  if (preselect) document.getElementById("service").value = preselect;
+
+  document.getElementById("contactForm").action = companyInfo.formspreeEndpoint;
+  wireFormSubmit("contactForm", "form-status", "Thanks — your request has been sent. We'll call you back within one business day.");
+</script>
+</body>
+</html>

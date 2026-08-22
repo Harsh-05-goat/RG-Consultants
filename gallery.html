@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — RG Consultants</title>
+<meta name="description" content="Photos of the RG Consultants office in Dehradun.">
+<link rel="canonical" href="https://rgconsultants.in/gallery.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header" id="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a> / Gallery</div>
+      <h1>See where we work.</h1>
+      <p>A look inside our Dehradun office.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="gallery-filters reveal" id="galleryFilters"></div>
+      <div class="masonry reveal" id="masonryGrid"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  let activeGalleryCat = "All";
+  let images = [];
+
+  function renderGalleryFilters(cats) {
+    document.getElementById("galleryFilters").innerHTML = cats.map(c => `
+      <button class="filter-chip ${c === activeGalleryCat ? "active" : ""}" data-cat="${c}">${c}</button>
+    `).join("");
+    document.querySelectorAll(".filter-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeGalleryCat = btn.getAttribute("data-cat");
+        renderGalleryFilters(cats);
+        renderMasonry();
+      });
+    });
+  }
+
+  function renderMasonry() {
+    const filtered = activeGalleryCat === "All" ? images : images.filter(i => i.category === activeGalleryCat);
+    document.getElementById("masonryGrid").innerHTML = filtered.map((img, i) => `
+      <figure class="masonry-item" data-index="${i}">
+        <img src="${img.src}" alt="${img.caption}" loading="lazy">
+        <figcaption>${img.caption}</figcaption>
+      </figure>
+    `).join("");
+    document.querySelectorAll(".masonry-item").forEach(el => {
+      el.addEventListener("click", () => openLightbox(filtered[Number(el.getAttribute("data-index"))]));
+    });
+  }
+
+  function openLightbox(img) {
+    document.getElementById("lightboxImg").src = img.src;
+    document.getElementById("lightboxImg").alt = img.caption;
+    document.getElementById("lightboxCaption").textContent = img.caption;
+    document.getElementById("lightbox").classList.add("open");
+  }
+  function closeLightbox() { document.getElementById("lightbox").classList.remove("open"); }
+  document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox").addEventListener("click", (e) => { if (e.target.id === "lightbox") closeLightbox(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
+
+  RGData.getGalleryImages().then(imgs => {
+    images = imgs;
+    const cats = ["All", ...new Set(imgs.map(i => i.category))];
+    renderGalleryFilters(cats);
+    renderMasonry();
+  });
+</script>
+</body>
+</html>

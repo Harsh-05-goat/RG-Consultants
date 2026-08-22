@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Article — RG Consultants</title>
+<meta name="description" id="pageDesc" content="RG Consultants resource article.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header" id="site-header"></header>
+
+<main id="main">
+  <section class="page-hero" style="padding-bottom:40px;">
+    <div class="wrap" style="max-width:760px;">
+      <div class="breadcrumb"><a href="index.html">Home</a> / <a href="resources.html">Resources</a> / <span id="breadcrumbTitle"></span></div>
+      <div id="articleMeta" class="mono" style="font-size:12px;color:var(--ink-faint);margin-bottom:10px;"></div>
+      <h1 id="articleTitle">Loading…</h1>
+    </div>
+  </section>
+
+  <section id="articleBody" style="display:none;padding-top:0;">
+    <div class="wrap" style="max-width:760px;">
+      <p id="articleContent" style="font-size:16px;color:var(--ink-soft);line-height:1.8;"></p>
+
+      <div style="margin:44px 0;padding:20px;background:var(--gold-soft);border-radius:var(--radius);font-size:13.5px;color:var(--gold-deep);">
+        This is placeholder article content included to demonstrate the page layout. Replace it with verified,
+        dated write-ups in <code class="mono">js/data.js</code> before publishing.
+      </div>
+
+      <div class="divider-label">Related Service</div>
+      <div id="relatedServiceCard"></div>
+
+      <div class="divider-label">Related Articles</div>
+      <div class="article-grid" id="relatedArticles" style="grid-template-columns:repeat(2,1fr);"></div>
+
+      <div style="margin-top:48px;text-align:center;">
+        <a href="contact.html" class="btn btn-primary">Have a question about this? Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="notFound" style="display:none;text-align:center;">
+    <div class="wrap"><p>We couldn't find that article. <a href="resources.html" style="text-decoration:underline;">View all resources</a>.</p></div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const slug = qs("slug");
+  RGData.getArticle(slug).then(a => {
+    if (!a) {
+      document.getElementById("notFound").style.display = "block";
+      document.getElementById("articleTitle").textContent = "Article not found";
+      return;
+    }
+    document.title = `${a.title} — RG Consultants`;
+    document.getElementById("pageTitle").textContent = `${a.title} — RG Consultants`;
+    document.getElementById("pageDesc").setAttribute("content", a.summary);
+    document.getElementById("breadcrumbTitle").textContent = a.title;
+    document.getElementById("articleTitle").textContent = a.title;
+    document.getElementById("articleMeta").textContent =
+      `${a.tag} · ${new Date(a.date).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})} · ${a.readTime}`;
+    document.getElementById("articleContent").textContent = a.body;
+    document.getElementById("articleBody").style.display = "block";
+
+    const relatedService = services.find(s =>
+      a.tag.toLowerCase().includes(s.title.split(" ")[0].toLowerCase()) ||
+      s.title.toLowerCase().includes(a.tag.toLowerCase())
+    ) || services[1];
+    document.getElementById("relatedServiceCard").innerHTML = `
+      <a href="service-detail.html?service=${relatedService.slug}" class="card" style="display:block;text-decoration:none;">
+        <div class="service-num">${relatedService.num}</div>
+        <h3 style="font-size:18px;margin:10px 0 6px;">${relatedService.title}</h3>
+        <p style="font-size:13.5px;color:var(--ink-soft);margin:0;">${relatedService.short}</p>
+      </a>`;
+
+    const related = RGData.getArticles().then(list => {
+      const sameTag = list.filter(x => x.slug !== a.slug && x.tag === a.tag).slice(0, 2);
+      const anyOther = list.filter(x => x.slug !== a.slug).slice(0, 2);
+      const show = sameTag.length ? sameTag : anyOther;
+      document.getElementById("relatedArticles").innerHTML = show.map(r => `
+        <a href="article-detail.html?slug=${r.slug}" class="article-card" style="text-decoration:none;">
+          <span class="article-tag">${r.tag}</span>
+          <h4>${r.title}</h4>
+          <p>${r.summary}</p>
+          <div class="foot"><span>${new Date(r.date).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</span><span>Read →</span></div>
+        </a>
+      `).join("");
+    });
+  });
+</script>
+</body>
+</html>

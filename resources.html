@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — RG Consultants</title>
+<meta name="description" content="GST updates, income tax updates, compliance calendar and articles from RG Consultants, Dehradun.">
+<link rel="canonical" href="https://rgconsultants.in/resources.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<header class="site-header" id="site-header"></header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="breadcrumb"><a href="index.html">Home</a> / Resources</div>
+      <h1>Important updates, explained simply.</h1>
+      <p>Sample article layout — <span class="verify-tag">not a live feed</span>. Connect a Google Sheet, CMS or API in <code class="mono">js/data.js</code> to publish real, dated content.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="search-row reveal" id="searchRow">
+        <input type="search" id="articleSearch" placeholder="Search articles…" aria-label="Search articles">
+      </div>
+      <div class="filter-row reveal" id="categoryFilters"></div>
+      <div class="article-grid reveal" id="articleGrid"></div>
+      <p id="noResults" style="display:none;color:var(--ink-faint);font-size:14px;">No articles match your search.</p>
+    </div>
+  </section>
+
+  <section class="section-alt" id="calendar">
+    <div class="wrap" style="max-width:760px;">
+      <div class="section-head reveal">
+        <h2>This month at a glance.</h2>
+        <p id="calendarNote">Key filing dates, updated regularly.</p>
+      </div>
+      <div class="calendar-list reveal" id="calendarList"></div>
+    </div>
+  </section>
+
+  <section class="section-dark" style="text-align:center;">
+    <div class="wrap reveal" style="max-width:600px;">
+      <h2 style="color:var(--on-dark);font-size:clamp(26px,3.6vw,36px);">Need help acting on a deadline?</h2>
+      <div style="margin-top:24px;"><a href="contact.html" class="btn btn-gold">Contact Us</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+<script>
+  let activeCategory = qs("cat") || "All";
+  let allArticles = [];
+
+  function renderFilters() {
+    document.getElementById("categoryFilters").innerHTML = articleCategories.map(c => `
+      <button class="filter-chip ${c === activeCategory ? "active" : ""}" data-cat="${c}">${c}</button>
+    `).join("");
+    document.querySelectorAll(".filter-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeCategory = btn.getAttribute("data-cat");
+        renderFilters();
+        renderArticles();
+      });
+    });
+  }
+
+  function renderArticles() {
+    const term = document.getElementById("articleSearch").value.trim().toLowerCase();
+    const filtered = allArticles.filter(a => {
+      const matchesCat = activeCategory === "All" || a.tag === activeCategory;
+      const matchesTerm = !term || a.title.toLowerCase().includes(term) || a.summary.toLowerCase().includes(term);
+      return matchesCat && matchesTerm;
+    });
+    const grid = document.getElementById("articleGrid");
+    const noResultsEl = document.getElementById("noResults");
+    document.getElementById("searchRow").style.display = allArticles.length ? "flex" : "none";
+    document.getElementById("categoryFilters").style.display = allArticles.length ? "flex" : "none";
+    if (!allArticles.length) {
+      noResultsEl.textContent = "Resources will be added here soon.";
+      noResultsEl.style.display = "block";
+    } else {
+      noResultsEl.textContent = "No articles match your search.";
+      noResultsEl.style.display = filtered.length ? "none" : "block";
+    }
+    grid.innerHTML = filtered.map(a => `
+      <a href="article-detail.html?slug=${a.slug}" class="article-card" style="text-decoration:none;">
+        <span class="article-tag">${a.tag}</span>
+        <h4>${a.title}</h4>
+        <p>${a.summary}</p>
+        <div class="foot"><span>${new Date(a.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})} · ${a.readTime}</span><span>Read →</span></div>
+      </a>
+    `).join("");
+  }
+
+  document.getElementById("articleSearch").addEventListener("input", renderArticles);
+  renderFilters();
+  RGData.getArticles().then(list => {
+    allArticles = list;
+    renderArticles();
+  });
+
+  RGData.getComplianceDates().then(dates => {
+    const list = document.getElementById("calendarList");
+    if (!dates.length) {
+      list.innerHTML = `<p style="color:var(--ink-faint);font-size:14px;padding:18px 6px;">No upcoming dates added yet.</p>`;
+      return;
+    }
+    list.innerHTML = dates.map(d => `
+      <div class="calendar-row">
+        <div class="calendar-date mono">${d.date}</div>
+        <div class="calendar-title">${d.title}</div>
+        <div class="calendar-tag">${d.tag}</div>
+      </div>
+    `).join("");
+  });
+</script>
+</body>
+</html>
